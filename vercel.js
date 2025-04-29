@@ -1,9 +1,19 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "twitter-link-expander.js", "use": "@vercel/node" }
-  ],
+  "functions": {
+    "api/*.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
   "routes": [
-    { "src": "/(.*)", "dest": "/twitter-link-expander.js" }
+    {
+      "src": "/",
+      "dest": "/index.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1.js"
+    }
   ]
 }
