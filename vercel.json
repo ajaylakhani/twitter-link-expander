@@ -1,13 +1,7 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/", "destination": "/index.js" },
-    { "source": "/api/:path*", "destination": "/api/:path*.js" }
-  ],
-  "functions": {
-    "api/*.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  }
+  "routes": [
+    { "src": "/", "dest": "index.js" },
+    { "src": "/api/(.*)", "dest": "/api/$1.js" }
+  ]
 }
