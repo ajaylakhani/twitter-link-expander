@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Link Expander</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0d8ed9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Twitter Link Expander</h1>
+    <p>Enter a Twitter URL (t.co or any Twitter link) to expand it</p>
+    
+    <div class="container">
+        <input type="text" id="urlInput" placeholder="Enter Twitter URL (e.g., https://t.co/abcdef)" />
+        <button id="expandBtn">Expand URL</button>
+        
+        <div class="result" id="result" style="display: none;">
+            <h3>Result:</h3>
+            <p><strong>Original URL:</strong> <span id="originalUrl"></span></p>
+            <p><strong>Expanded URL:</strong> <span id="expandedUrl"></span></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('expandBtn').addEventListener('click', async () => {
+            const url = document.getElementById('urlInput').value.trim();
+            
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+            
+            try {
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = '<p>Loading...</p>';
+                
+                const response = await fetch('http://localhost:3000/api/expand', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url }),
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <h3>Result:</h3>
+                        <p><strong>Original URL:</strong> ${data.original}</p>
+                        <p><strong>Expanded URL:</strong> <a href="${data.expanded}" target="_blank">${data.expanded}</a></p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h3>Error:</h3>
+                        <p class="error">${data.error || 'Failed to expand URL'}</p>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h3>Error:</h3>
+                    <p class="error">Failed to connect to the API server. Make sure it's running at http://localhost:3000</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
