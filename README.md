@@ -2,6 +2,7 @@
 
 A lightweight Node.js API for expanding Twitter/X shortened URLs (t.co links) to their original destination URLs.
 
+![Twitter Link Expander Demo](https://twitter-link-expander.vercel.app/)
 
 ## Features
 
