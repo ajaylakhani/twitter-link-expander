@@ -2,7 +2,6 @@
 
 A lightweight Node.js API for expanding Twitter/X shortened URLs (t.co links) to their original destination URLs.
 
-![Twitter Link Expander Demo](https://via.placeholder.com/800x400?text=Twitter+Link+Expander+Demo)
 
 ## Features
 
