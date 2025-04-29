@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "twitter-link-expander.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/twitter-link-expander.js" }
+  ]
+}
