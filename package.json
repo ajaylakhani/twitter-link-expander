@@ -4,7 +4,7 @@
   "description": "API for expanding Twitter/X shortened URLs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node twitter-link-expander.js"
   },
   "dependencies": {
     "axios": "^1.6.0"
